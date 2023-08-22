@@ -1,0 +1,239 @@
+#include <iostream>
+#include <stdio.h>
+#include <ctype.h>
+using namespace std;
+
+struct CD
+{
+    int codigo;
+    char artista[30];
+    char album[30];
+    int no_canciones;
+    float precio;
+    int existencias;
+} cd[50];
+
+int contador = 0;
+
+
+//declaracion de prototipo
+
+int BuscarCd(int);
+
+void IntroducirCd();
+void Mostrar();
+void Modificar(int);
+void Venta();
+
+int main()
+{
+    int opc =0;
+    do
+    {
+        cout << "1. Agregar CD"<<endl;
+        cout << "2. Mostrar todos los CDs"<<endl;
+        cout << "3. Buscar por codigo"<<endl;
+        cout << "4. Modificar"<<endl;
+        cout << "5. Realizar una venta"<<endl;
+        cout << "6. Salida"<<endl;
+        cin >> opc;
+        cout<<" "<<endl;
+
+        switch (opc)
+        {
+            case 1:
+                if(contador >=50)
+                {
+                    cout<<"Lista llena"<<endl;
+                }
+                else
+                {
+                    IntroducirCd();
+                }
+
+                break;
+            case 2:
+                Mostrar();
+                break;
+            case 3:
+                int codigoTemp;
+                cout <<"Ingrese el codigo"<<endl;
+                cin>>codigoTemp;
+                BuscarCd(codigoTemp);
+                break;
+
+            case 4:
+                int codigoMod =0;
+                cout <<"Ingrese el codigo"<<endl;
+                cin>>codigoMod;
+                Modificar(codigoMod);
+                break;
+
+            case 5:
+                cout <<"Hola we"<<endl;
+                Venta();
+            break;
+
+        }
+
+    }
+    while(opc !=6);
+    cout<<"Adios"<<endl;
+};
+
+
+
+void IntroducirCd()
+{
+    char desc;
+    int band =0;
+    do
+    {
+        fflush(stdin);
+        cout << "Ingrese nombre del album: "<<endl;
+        cin >> cd[contador].album;
+
+        cout << "Ingrese el codigo: "<<endl;
+        cin >>  cd[contador].codigo;
+
+        cout << "Ingrese nombre del artista: "<<endl;
+        cin >> cd[contador].artista;
+
+        cout << "Ingrese numero de caciones del album: "<<endl;
+        cin >> cd[contador].no_canciones;
+
+        cout << "Ingrese el precio del Cd: "<<endl;
+        cin >> cd[contador].precio;
+
+        cout << "Ingrese existencias: " <<endl;
+        cin >> cd[contador].existencias;
+        cout<<" "<<endl;
+        fflush(stdin);
+        contador +=1;
+        cout << "Ingresar otro mas?: S/N" << endl;
+        cin >> desc ;
+        if(desc == 'S'|| desc == 's' )
+            band =1;
+
+    }
+    while(band != 0);
+    cout<<" "<<endl;
+
+}
+
+
+void Mostrar()
+{
+    for(int x = 0; x<contador; x++)
+    {
+        cout<<" "<<endl;
+        cout << "No." << x <<endl;
+        cout << "Codigo de cd: "<< cd[x].codigo<<endl;
+        cout << "Nombre del album: "<< cd[x].album<<endl;
+        cout << "Nombre del artista: "<< cd[x].artista<<endl;
+        cout << "No. canciones: "<< cd[x].no_canciones<<endl;
+        cout << "Precio: "<< cd[x].precio<<endl;
+        cout << "Existencias: "<< cd[x].existencias<<endl;
+        cout<<" "<<endl;
+    }
+}
+
+int BuscarCd(int cod)
+{
+    for(int i =0; i<contador; i++)
+    {
+        if(cd[i].codigo==cod)
+        {
+            cout<<" "<<endl;
+            cout << "No." << i <<endl;
+            cout << "Codigo de cd: "<< cd[i].codigo<<endl;
+            cout << "Nombre del album: "<< cd[i].album<<endl;
+            cout << "Nombre del artista: "<< cd[i].artista<<endl;
+            cout << "No. canciones: "<< cd[i].no_canciones<<endl;
+            cout << "Precio: "<< cd[i].precio<<endl;
+            cout << "Existencias: "<< cd[i].existencias<<endl;
+            cout<<" "<<endl;
+        }
+        else
+        {
+            cout<<" "<<endl;
+            cout<<"No se encontro"<<endl;
+            cout<<" "<<endl;
+            return 0;
+        }
+    }
+
+}
+
+void Modificar(int codMod)
+{
+    char resp;
+    int i=0;
+    i = BuscarCd(codMod);
+    if(i != 0)
+    {
+        cout << cd[i].codigo<<endl;
+        cout << cd[i].album<<endl;
+        cout << cd[i].artista<<endl;
+        cout << cd[i].existencias<<endl;
+        cout << cd[i].precio<<endl;
+        cout << cd[i].no_canciones<<endl;
+        cout<<" "<<endl;
+
+        cout<<"Es el Deseado? S/N"<<endl;
+        cin>>resp;
+        if(resp == 'S'|| resp == 's' )
+        {
+            cout<<" "<<endl;
+            fflush(stdin);
+            cout << "Ingrese nuevo nombre del album: "<<endl;
+            cin >> cd[i].album;
+            cout << "Ingrese el codigo: "<<endl;
+            cin >>  cd[i].codigo;
+            cout << "Ingrese nombre del artista: "<<endl;
+            cin >> cd[i].artista;
+            cout << "Ingrese numero de caciones del album: "<<endl;
+            cin >> cd[i].no_canciones;
+            cout << "Ingrese el precio del Cd: "<<endl;
+            cin >> cd[i].precio;
+            cout << "Ingrese existencias: " <<endl;
+            cin >> cd[i].existencias;
+            cout<<" "<<endl;
+            fflush(stdin);
+
+            cout<<" Listo"<<endl;
+        }
+        else
+        {
+            cout <<"No se encontro el album"<<endl;
+            cout<<" "<<endl;
+
+        }
+    }
+}
+
+
+void Venta()
+{
+    int CodVent = 0, z =0;
+    cout <<""<<endl;
+    cin >> CodVent;
+
+    z = BuscarCd(CodVent);
+    if ( z != 0)
+    {
+        cout<<" "<<endl;
+        cout << "Venta realizada, gracias por su compra."<<endl;
+        cd[z].existencias-=1;
+    }
+    else
+    {
+        cout<<" "<<endl;
+        cout <<"No se encontro el Cd."<<endl;
+        cout<<" "<<endl;
+
+    }
+
+}
+
+
